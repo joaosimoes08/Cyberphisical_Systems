@@ -36,6 +36,9 @@ void loop() {
 }
 */
 
+
+/*
+LIGAR E DESLIGAR LED 1.3 em 1.3 segundos
 #include <Arduino.h>
 
 #define LED 2
@@ -56,4 +59,36 @@ void setup() {
 
 void loop() {
 
+}
+*/
+
+#include <Arduino.h>
+
+const int ledPin = 2; 
+
+const int pwmChannel = 0; // Selects channel 0
+const int frequency = 1000; // PWM frequency of 1 kHz
+const int resolution = 8; // 8-bit resolution, 256 possible values
+const int pwmPin = ledPin;
+
+void setup() {
+  // configure LED PWM functionalitites
+  ledcSetup(pwmChannel, frequency, resolution);
+  // attach the channel to the GPIO to be controlled
+  ledcAttachPin(pwmPin, pwmChannel);
+}
+
+void loop() {
+  // increase the LED brightness
+  for(int dutyCycle = 0; dutyCycle <= 255; dutyCycle++) {
+    // changing the LED brightness with PWM
+    ledcWrite(pwmChannel, dutyCycle);
+    delay(15);
+  }
+  // decrease the LED brightness
+  for(int dutyCycle = 255; dutyCycle >= 0; dutyCycle--) {
+    // changing the LED brightness with PWM
+    ledcWrite(pwmChannel, dutyCycle);
+    delay(15);
+  }
 }
